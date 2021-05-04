@@ -6,7 +6,7 @@ type Trie struct {
 	root *Node
 }
 
-func newTrie() Trie {
+func NewTrie() Trie {
 	return Trie{root: newNode()}
 }
 
