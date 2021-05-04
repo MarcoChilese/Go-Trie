@@ -6,8 +6,8 @@ type Trie struct {
 	root *Node
 }
 
-func NewTrie() Trie {
-	return Trie{root: newNode()}
+func NewTrie() *Trie {
+	return &Trie{root: newNode()}
 }
 
 func ordChar(key string) int {
