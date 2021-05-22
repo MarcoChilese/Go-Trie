@@ -1,18 +1,23 @@
 package trie
 
-import "unicode/utf8"
+import (
+	"strings"
+	"unicode"
+	"unicode/utf8"
+)
 
 type Trie struct {
 	root *Node
 }
 
-func NewTrie() Trie {
-	return Trie{root: newNode()}
+func NewTrie() *Trie {
+	return &Trie{root: newNode()}
 }
 
 func ordChar(key string) int {
 	value, _ := utf8.DecodeRuneInString(key)
 	aVal, _ := utf8.DecodeRuneInString("a")
+
 	return int(value) - int(aVal)
 }
 
@@ -32,7 +37,24 @@ func (t Trie) AddWord(key string) {
 	current.end = true
 }
 
+func isInt(s string) bool {
+	for _, c := range s {
+		if !unicode.IsDigit(c) {
+			return false
+		}
+	}
+	return true
+}
+
 func (t Trie) PrefixSearch(prefix string) []string {
+	if strings.Contains(prefix, "\n") {
+		prefix = strings.ReplaceAll(prefix, "\n", "")
+	}
+
+	if isInt(prefix) {
+		return nil
+	}
+
 	current := t.root
 
 	for _, c := range prefix {
