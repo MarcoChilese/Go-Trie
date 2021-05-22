@@ -1,6 +1,9 @@
 package trie
 
 import (
+	"bufio"
+	"log"
+	"os"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -82,4 +85,26 @@ func (t Trie) PrefixSearch(prefix string) []string {
 		}
 	}
 	return found
+}
+
+func BuildTrieFromDictionary(pathToDict string) *Trie {
+	var gotrie = NewTrie()
+
+	file, err := os.Open(pathToDict)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+
+		}
+	}(file)
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		word := scanner.Text()
+		gotrie.AddWord(word)
+	}
+	return gotrie
 }
