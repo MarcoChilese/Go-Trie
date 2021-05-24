@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"sort"
 	"strings"
 	"unicode/utf8"
 )
@@ -77,6 +78,7 @@ func (t Trie) PrefixSearch(prefix string) []string {
 			stack = append(stack, Couple{a: child, b: prefix + child.value})
 		}
 	}
+	sort.Strings(found)
 	return found
 }
 
