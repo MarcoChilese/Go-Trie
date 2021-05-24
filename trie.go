@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"regexp"
 	"strings"
-	"unicode"
 	"unicode/utf8"
 )
 
@@ -40,21 +40,14 @@ func (t Trie) AddWord(key string) {
 	current.end = true
 }
 
-func isInt(s string) bool {
-	for _, c := range s {
-		if !unicode.IsDigit(c) {
-			return false
-		}
-	}
-	return true
-}
+var IsLetter = regexp.MustCompile(`^[a-zA-Z]+$`).MatchString
 
 func (t Trie) PrefixSearch(prefix string) []string {
 	if strings.Contains(prefix, "\n") {
 		prefix = strings.ReplaceAll(prefix, "\n", "")
 	}
 
-	if isInt(prefix) {
+	if !IsLetter(prefix) {
 		return nil
 	}
 
